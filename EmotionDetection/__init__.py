@@ -1,2 +1,2 @@
 from .emotion_detection import emotion_detector
-import requests
+from .emotion_detection import greet

@@ -34,3 +34,7 @@ def emotion_detector(text_to_analyse):
         'sadness': sadness_score,
         'dominant_emotion': max_key  }
     return out
+
+
+def greet(name):
+    return f"Hello, {name}!"
