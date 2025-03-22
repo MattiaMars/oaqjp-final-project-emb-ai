@@ -1,4 +1,3 @@
-from EmotionDetection import greet
 from EmotionDetection import emotion_detector
 import unittest
 
