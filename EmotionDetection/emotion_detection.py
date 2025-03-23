@@ -1,5 +1,15 @@
 
 def emotion_detector(text_to_analyse):
+    blank_out=        {
+        'anger': None,
+        'disgust': None,
+        'fear': None,
+        'joy': None,
+        'sadness': None,
+        'dominant_emotion': None  }
+    if text_to_analyse == '':
+        return blank_out
+
     import requests
     # Define the inputs
     url = "https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict"
@@ -12,9 +22,11 @@ def emotion_detector(text_to_analyse):
         }
     # Send the POST request
     response = requests.post(url, json=input_json, headers=headers)
-    if response.status_code != 200:
+    if response.status_code == 400:
+        out = blank_out
+    elif response.status_code != 200:
         print('INVALID server response')
-        out =''
+        out = blank_out
     else:
         text=response.json()
         import json
@@ -34,7 +46,3 @@ def emotion_detector(text_to_analyse):
         'sadness': sadness_score,
         'dominant_emotion': max_key  }
     return out
-
-
-def greet(name):
-    return f"Hello, {name}!"

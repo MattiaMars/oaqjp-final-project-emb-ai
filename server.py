@@ -14,13 +14,11 @@ def home():
 @app.route('/emotionDetector', methods=['GET'])
 def emotion_detect():
     text_to_analyze = request.args.get('textToAnalyze')
-    if text_to_analyze:
-        emotion=emotion_detector(text_to_analyze)  # Replace with your function
-        output='For the given statement, the system response is: /n' + '"anger": ' + str(emotion["anger"]) + ' "disgust": '  + str(emotion["disgust"]) + '" fear": ' + str(emotion["fear"]) + '" joy": ' + str(emotion["joy"]) + ' "sadness": ' + str(emotion["sadness"]) + '\n\t' + '. The dominant emotion is: ' + emotion["dominant_emotion"]
-         
-        return output
-        #return jsonify({'For the given statement, the system response is ': emotion})
+    emotion=emotion_detector(text_to_analyze)
+    if emotion['dominant_emotion'] is None:
+        output='Invalid text! Please try again'
     else:
-        return jsonify({'error': 'No text provided'}), 400
+        output= str('For the given statement, the system response is: /n' + '"anger": ' + str(emotion["anger"]) + ' "disgust": '  + str(emotion["disgust"]) + '" fear": ' + str(emotion["fear"]) + '" joy": ' + str(emotion["joy"]) + ' "sadness": ' + str(emotion["sadness"]) + '\n\t' + '. The dominant emotion is: ' + emotion["dominant_emotion"])
+    return jsonify(output)
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000,debug=True)
